@@ -3,6 +3,8 @@ console.log("api loading suceess")
 window.onload = () => {
     handleSignin()
     handleLogin()
+    handleMock()
+    handleLogout()
 }
 
 async function handleSignin(){
@@ -56,4 +58,20 @@ async function handleLogin(){
     }).join(''));
 
     localStorage.setItem("payload", jsonPayload);
+}
+
+async function handleMock(){
+    const response = await fetch('http://127.0.0.1:8000/users/mock/', {
+        headers:{
+            "Authorization":"Bearer " +  localStorage.getItem("access")
+        },
+        method:'GET',
+    })
+    console.log(response)
+}
+
+async function handleLogout(){
+    localStorage.removeItem("access")
+    localStorage.removeItem("refresh")
+    localStorage.removeItem("payload")
 }
